@@ -4,16 +4,6 @@ This plugin is a quick and dirty implementation of MochiKit's simple tag creatio
 
 ---
 
-## Detail
-
-The **classchange** event fires whenever classes are changed with jQuery.  **Please note that if
-classes are changed with standard Javascript or any other library; this event system will likely
-fail to trigger.**  The **classchange** event will also fire with a namespace equivalent to the
-class added/removed.  Data will also be passed to the event with properties for *action*
-(add/remove) and *class*.
-
----
-
 ## Quick usage
 
 	<div id="formContainer"></div>

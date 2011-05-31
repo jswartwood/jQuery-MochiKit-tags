@@ -1,4 +1,4 @@
-/*!
+/*! -*-mode: js2-*-
  * jQuery MochiKit tags
  * https://github.com/jswartwood/jQuery-MochiKit-tags
  *
@@ -69,30 +69,36 @@
 		{"name": "TT", "closing": false },
 		{"name": "UL", "closing": false }
 	];
-	
+
 	for (var i = 0, j = domTags.length; i < j; i++) {
 		$[domTags[i].name.toUpperCase()] = (function( tDefinition ) {
 			var tagName = tDefinition.name.toLowerCase(),
 				closing = tDefinition.closing;
-			
+
 			return function( attrs, childs ) {
 				var tag = $("<" + tagName + (closing ? ("></" + tagName + ">") : "/>"));
-				
+
 				if (attrs instanceof Array) {
 					childs = attrs;
 				} else if (!!attrs) {
 					tag.attr(attrs);
 				}
-				
+
+                // $.SELECT({ ... }, [ $.OPTION( ... ), $.OPTION( ... ) ])
 				if (childs instanceof Array) {
 					for (var g = 0, h = childs.length; g < h; g++) {
 						tag.append(childs[g]);
 					}
-				}
-				
+                }
+
+                // $.OPTION( {value : 'foo' }, 'A label' )
+                else {
+                    tag.append(childs);
+                }
+
 				return tag;
 			};
 		})(domTags[i]);
 	}
-	
+
 })(jQuery);

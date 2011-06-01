@@ -78,23 +78,23 @@
 			return function( attrs, childs ) {
 				var tag = $("<" + tagName + (closing ? ("></" + tagName + ">") : "/>"));
 
-				if (attrs instanceof Array) {
-					childs = attrs;
-				} else if (!!attrs) {
+				if (jQuery.isPlainObject(attrs)) {
 					tag.attr(attrs);
+				} else if (!!attrs) {
+					childs = attrs;
 				}
 
-                // $.SELECT({ ... }, [ $.OPTION( ... ), $.OPTION( ... ) ])
 				if (childs instanceof Array) {
+					// $.SELECT({ ... }, [ $.OPTION( ... ), $.OPTION( ... ) ])
+
 					for (var g = 0, h = childs.length; g < h; g++) {
 						tag.append(childs[g]);
 					}
-                }
+				} else {
+					// $.OPTION( {value : 'foo' }, 'A label' )
 
-                // $.OPTION( {value : 'foo' }, 'A label' )
-                else {
-                    tag.append(childs);
-                }
+					tag.append(childs);
+				}
 
 				return tag;
 			};

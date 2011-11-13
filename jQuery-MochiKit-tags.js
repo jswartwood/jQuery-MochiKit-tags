@@ -16,7 +16,7 @@
 			var tag = tags[i], closing = slashRE.test(tag), tagName = tag
 					.replace(slashRE, '').toLowerCase();
 			$[tagName.toUpperCase()] = tagFunctionFactory("<" + tagName
-					+ (closing ? ("></" + tagName) : "/") + ">");
+					+ (closing ? "></" + tagName : "/") + ">");
 		}
 	};
 

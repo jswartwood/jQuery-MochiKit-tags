@@ -29,26 +29,21 @@
 				children = [].slice.call(arguments, 1);
 			}
 
-			pushChildren(tag, children);
+			(function recursiveAppend (arrayOrElement) {
+				if (!arrayOrElement) { return; }
+				if ('object' === typeof arrayOrElement
+						&& 'number' === typeof arrayOrElement.length) {
+					for ( var g = 0, h = arrayOrElement.length; g < h; g++) {
+						recursiveAppend(arrayOrElement[g]);
+					}
+				}
+				else {
+					tag.append(arrayOrElement);
+				}
+			})(children);
 
 			return tag;
 		};
-	}
-
-	function pushChildren (tag, children) {
-		function recursiveAppend (arrayOrElement) {
-			if (!arrayOrElement) { return; }
-			if ('object' === typeof arrayOrElement && 'number' === typeof arrayOrElement.length) {
-				for ( var g = 0, h = arrayOrElement.length; g < h; g++) {
-					recursiveAppend(arrayOrElement[g]);
-				}
-			}
-			else {
-				tag.append(arrayOrElement);
-			}
-		}
-
-		recursiveAppend(children);
 	}
 
 	$.mochiTags([ "A", "ARTICLE", "ASIDE", "BR/", "BUTTON/", "CANVAS",

@@ -1,58 +1,118 @@
+/*!
+ * jQuery MochiKit tags v1.5 | git.io/Bmwneg
+ * jacob.swartwood.info/license/
+ */
 /*
- * jQuery MochiKit tags
- * https://github.com/{jswartwood,herby}/jQuery-MochiKit-tags
+ * A jQuery adaptation of MochiKit's DOM creation shortcuts
+ * https://github.com/jswartwood/jQuery-MochiKit-tags
  *
  * Copyright (c) 2011 Jacob Swartwood
- * Copyright (c) 2011 Herbert Vojčík
  * Licensed under the MIT license
+ *
+ * Contributors:
+ * Herbert Vojčík - https://github.com/herby/jQuery-MochiKit-tags
  */
 
-(function ($) {
-	var slashRE = /\/$/;
-	slashRE.compile();
+(function ( $ ) {
+	var tagMap = {},
+		slashRE = /\/$/;
 
-	$.mochiTags = function (tags) {
-		for ( var i = 0, j = tags.length; i < j; i++) {
-			var tag = tags[i], closing = slashRE.test(tag), tagName = tag
-					.replace(slashRE, '').toLowerCase();
-			$[tagName.toUpperCase()] = tagFunctionFactory("<" + tagName
-					+ (closing ? "></" + tagName : "/") + ">");
+	$.mochiTags = function( tags ) {
+		if (tags) {
+			tags = [].concat(tags);
+
+			var tag, closing;
+			for ( var i = 0, j = tags.length; i < j; i++) {
+				tag = tags[i].replace(slashRE, "").toUpperCase();
+				if (!tagMap[tag]) {
+					tagMap[tag] = {
+						closing: slashRE.test(tags[i]),
+						tagName: tag.toLowerCase()
+					};
+					$[tag] = tagFunctionFactory("<" + tagMap[tag].tagName + (tagMap[tag].closing ? "></" + tagMap[tag].tagName : "/") + ">");
+				}
+			}
 		}
+
+		return tagMap;
 	};
 
-	function tagFunctionFactory (tagTemplate) {
-		return function (/* [attrs], children... */) {
-			var tag = $(tagTemplate), children = arguments;
+	function tagFunctionFactory( tagTemplate ) {
+		return function( /* [attrs], children... */ ) {
+			var tag = $(tagTemplate),
+				AP = Array.prototype,
+				children = AP.concat.apply([], AP.slice.call(arguments));
 
-			if ($.isPlainObject(arguments[0])) {
-				tag.attr(arguments[0]);
-				children = [].slice.call(arguments, 1);
+			if ($.isPlainObject(children[0])) {
+				tag.attr(children.shift());
 			}
-
-			(function recursiveAppend (arrayOrElement) {
-				if (!arrayOrElement) { return; }
-				if ('object' === typeof arrayOrElement
-						&& 'number' === typeof arrayOrElement.length) {
-					for ( var g = 0, h = arrayOrElement.length; g < h; g++) {
-						recursiveAppend(arrayOrElement[g]);
-					}
-				}
-				else {
-					tag.append(arrayOrElement);
-				}
-			})(children);
-
+			
+			for ( var g = 0, h = children.length; g < h; g++) {
+				tag.append(children[g]);
+			}
+			
 			return tag;
 		};
 	}
 
-	$.mochiTags([ "A", "ARTICLE", "ASIDE", "BR/", "BUTTON/", "CANVAS",
-			"CAPTION", "DD", "DIV", "DL", "DT", "FIELDSET", "FIGURE",
-			"FIGCAPTION", "FOOTER", "FORM", "H1", "H2", "H3", "H4", "H5", "H6",
-			"HEADER", "HGROUP", "HR/", "IFRAME", "IMG/", "INPUT/", "LABEL",
-			"LEGEND", "LI", "LINK/", "MARK", "METER", "NAV", "OL", "OPTGROUP",
-			"OPTION", "P", "PRE", "PROGRESS", "SCRIPT", "SECTION", "SELECT",
-			"SPAN", "STRONG", "STYLE", "TABLE", "TBODY", "TD", "TEXTAREA",
-			"TFOOT", "TH", "THEAD", "TR", "TT", "UL" ]);
+	$.mochiTags([
+		"A",
+		"ARTICLE",
+		"ASIDE",
+		"BR/",
+		"BUTTON/",
+		"CANVAS",
+		"CAPTION",
+		"DD",
+		"DIV",
+		"DL",
+		"DT",
+		"FIELDSET",
+		"FIGURE",
+		"FIGCAPTION",
+		"FOOTER",
+		"FORM",
+		"H1",
+		"H2",
+		"H3",
+		"H4",
+		"H5",
+		"H6",
+		"HEADER",
+		"HGROUP",
+		"HR/",
+		"IFRAME",
+		"IMG/",
+		"INPUT/",
+		"LABEL",
+		"LEGEND",
+		"LI",
+		"LINK/",
+		"MARK",
+		"METER",
+		"NAV",
+		"OL",
+		"OPTGROUP",
+		"OPTION",
+		"P",
+		"PRE",
+		"PROGRESS",
+		"SCRIPT",
+		"SECTION",
+		"SELECT",
+		"SPAN",
+		"STRONG",
+		"STYLE",
+		"TABLE",
+		"TBODY",
+		"TD",
+		"TEXTAREA",
+		"TFOOT",
+		"TH",
+		"THEAD",
+		"TR",
+		"TT",
+		"UL"
+	]);
 
 })(jQuery);

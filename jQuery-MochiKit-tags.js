@@ -40,8 +40,7 @@
 	function tagFunctionFactory( tagTemplate ) {
 		return function( /* [attrs], children... */ ) {
 			var tag = $(tagTemplate),
-				AP = Array.prototype,
-				children = AP.concat.apply([], AP.slice.call(arguments));
+				children = Array.prototype.concat.apply([], arguments);
 
 			if ($.isPlainObject(children[0])) {
 				tag.attr(children.shift());

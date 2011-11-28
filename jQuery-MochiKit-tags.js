@@ -1,5 +1,5 @@
 /*!
- * jQuery MochiKit tags v1.5 | git.io/Bmwneg
+ * jQuery MochiKit tags v1.5.1 | git.io/Bmwneg
  * jacob.swartwood.info/license/
  */
 /*

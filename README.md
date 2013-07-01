@@ -6,7 +6,7 @@ This plugin is a quick and dirty implementation of MochiKit's simple tag creatio
 
 ## Quick usage
 
-```js
+```html
 <div id="formContainer"></div>
 <form id="myForm">
 	<input type="text" name="firstName" placeholder="First Name"/>

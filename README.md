@@ -6,12 +6,18 @@ This plugin is a quick and dirty implementation of MochiKit's simple tag creatio
 
 ## Quick usage
 
+To create:
 ```html
-<div id="formContainer"></div>
-<form id="myForm">
-	<input type="text" name="firstName" placeholder="First Name"/>
-	<input type="text" name="lastName" placeholder="Last Name"/>
-</form>
+<div id="formContainer">
+	<form id="myForm">
+		<input type="text" name="firstName" placeholder="First Name"/>
+		<input type="text" name="lastName" placeholder="Last Name"/>
+	</form>
+</div>
+```
+
+You might write:
+```html
 <script type="text/javascript">
 	$.FORM(
 		{"id": "myForm"},
